@@ -1,9 +1,11 @@
 # Currency App (Spring Boot + Angular)
 
 ## Wymagania
-
 - Java 17+ i Maven
 - Node.js LTS: 20.19+ lub 22.12+
+
+## Instalacja
+`cd frontend && npm start`
 
 ## Backend
 - Spring Boot (Java 17)
@@ -15,3 +17,6 @@
 - Angular
 - Start dev: `cd frontend && npm start`
 - API base: `http://localhost:8080` (dev)
+
+## Start Backend/Frontend
+`npm dev start`
