@@ -1,0 +1,12 @@
+{
+  "name": "currency-app-root",
+  "private": true,
+  "scripts": {
+    "backend": "cd backend && mvn spring-boot:run",
+    "frontend": "cd frontend && npm start",
+    "dev": "concurrently -n backend,frontend -c blue,green \"npm:backend\" \"npm:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

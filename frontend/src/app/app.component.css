@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  max-width: 720px;
+  margin: 24px auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+}
+
+.form-grid input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.form-grid button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #f6f6f6;
+  cursor: pointer;
+}
+.form-grid button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error { margin-top: 8px; color: #b00020; }
+.result { margin-top: 8px; }
+.divider { margin: 16px 0; border: none; border-top: 1px solid #ddd; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toolbar input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.loading { margin-top: 8px; }
+.muted { margin-top: 8px; color: #666; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+.table th,
+.table td {
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}

@@ -1,0 +1,16 @@
+# Java / Maven
+backend/target/
+backend/.idea/
+backend/*.iml
+backend/.project
+backend/.classpath
+backend/.settings/
+
+# Node / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# OS junk
+.DS_Store
+Thumbs.db

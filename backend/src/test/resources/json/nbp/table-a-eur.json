@@ -1,0 +1,10 @@
+[
+  {
+    "table": "A",
+    "no": "1",
+    "effectiveDate": "2022-01-01",
+    "rates": [
+      { "currency": "euro", "code": "EUR", "mid": 4.2954 }
+    ]
+  }
+]

@@ -1,0 +1,58 @@
+<div class="container">
+  <h2>NBP – kursy walut</h2>
+
+  <form #form="ngForm" (ngSubmit)="submit()" class="form-grid">
+    <input name="currency"
+           [(ngModel)]="currency"
+           placeholder="Kod waluty (np. EUR)"
+           required
+           #model1="ngModel"/>
+
+    <input name="name"
+           [(ngModel)]="name"
+           placeholder="Imię i nazwisko"
+           required
+           #model2="ngModel"/>
+
+    <button type="submit" [disabled]="form.invalid">Sprawdź kurs</button>
+  </form>
+
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+  <div
+    *ngIf="(model1.invalid && model1.touched) || (model2.invalid && model2.touched)" class="error">
+    Wypełnij puste pola
+  </div>
+  <div *ngIf="result !== undefined" class="result">
+    Aktualny kurs: <strong>{{ result }}</strong>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="toolbar">
+    <input [(ngModel)]="filterCode" placeholder="Filtr waluty (np. EUR)" />
+    <button type="button" (click)="loadHistory()">Odśwież historię</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Ładowanie…</div>
+
+  <table *ngIf="history?.length" class="table">
+    <thead>
+    <tr>
+      <th>Waluta</th>
+      <th>Użytkownik</th>
+      <th>Data</th>
+      <th>Wartość</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let r of history">
+      <td>{{ r.currency }}</td>
+      <td>{{ r.name }}</td>
+      <td>{{ r.date | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+      <td>{{ r.value }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!history?.length && !loading" class="muted">Brak danych</div>
+</div>
