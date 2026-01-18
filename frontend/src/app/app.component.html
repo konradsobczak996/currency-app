@@ -29,8 +29,8 @@
   <hr class="divider" />
 
   <div class="toolbar">
-    <input [(ngModel)]="filterCode" placeholder="Filtr waluty (np. EUR)" />
-    <button type="button" (click)="loadHistory()">Odśwież historię</button>
+    <input name="filterCode" [(ngModel)]="filterCode" placeholder="Filtr waluty (np. EUR)" />
+    <button type="button" (click)="applyFilter()">Odśwież historię</button>
   </div>
 
   <div *ngIf="loading" class="loading">Ładowanie…</div>
