@@ -8,9 +8,13 @@ import com.example.currency.repo.CurrencyRequestRepository;
 import com.example.currency.service.NbpSimpleService;
 import com.example.currency.service.RequestLogService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,18 +41,28 @@ public class CurrencyController {
     }
 
     @GetMapping("/requests")
-    public ResponseEntity<List<CurrencyRequestView>> list(@RequestParam(required = false) String code) {
+    public ResponseEntity<List<CurrencyRequestView>> list(@PageableDefault Pageable pageable,
+                                                          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant from,
+                                                          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant to,
+                                                          @RequestParam(required = false) String code) {
         List<CurrencyRequest> entities;
 
-        if (code == null || code.isBlank()) {
-            entities = repo.findAllByOrderByRequestedTimeDesc();
+        if (to != null && from != null){
+            entities = repo.findByRequestedTimeBetween(pageable,from, to);
         } else {
-            entities = repo.findByCurrencyCodeIgnoreCaseOrderByRequestedTimeDesc(code);
+            if (code == null || code.isBlank()) {
+                entities = repo.findAllByOrderByRequestedTimeDesc(pageable);
+            } else {
+                entities = repo.findByCurrencyCodeIgnoreCaseOrderByRequestedTimeDesc(code);
+            }
+
         }
+
 
         List<CurrencyRequestView> views = new ArrayList<>(entities.size());
         for (CurrencyRequest e : entities) {
             views.add(new CurrencyRequestView(
+                    e.getId(),
                     e.getCurrencyCode(),
                     e.getRequesterName(),
                     e.getRequestedTime(),
@@ -57,5 +71,11 @@ public class CurrencyController {
         }
 
         return ResponseEntity.ok(views);
+
+    }
+
+    @DeleteMapping("/requests")
+    public void delete(@RequestParam Long id) {
+        repo.deleteById(id);
     }
 }

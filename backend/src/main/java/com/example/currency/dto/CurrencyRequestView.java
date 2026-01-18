@@ -4,12 +4,14 @@ import java.time.Instant;
 
 public class CurrencyRequestView {
 
+    private final Long id;
     private final String currency;
     private final String name;
     private final Instant date;
     private final double value;
 
-    public CurrencyRequestView(String currency, String name, Instant date, double value) {
+    public CurrencyRequestView(Long id,String currency, String name, Instant date, double value) {
+        this.id = id;
         this.currency = currency;
         this.name = name;
         this.date = date;
@@ -28,4 +30,7 @@ public class CurrencyRequestView {
     public double getValue() {
         return value;
     }
-}
+
+    public Long getId() {
+        return id;
+    }}
