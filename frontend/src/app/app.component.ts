@@ -20,11 +20,17 @@ export class AppComponent implements OnInit {
   filterCode = '';
   history: any[] = [];
   loading = false;
+  page = 0;
+  pageSize = 10;
+  hasNext = false;
 
   constructor(private api: CurrencyService) {}
 
-  ngOnInit(): void { this.loadHistory(); }
+  ngOnInit(): void {  this.loadPage(0); }
 
+  refresh() {
+    this.loadPage(0);
+  }
   submit() {
     this.errorMsg = '';
     this.result = undefined;
@@ -51,5 +57,39 @@ export class AppComponent implements OnInit {
       next: list => { this.history = list; this.loading = false; },
       error: e => { this.errorMsg = e?.message || 'Błąd pobierania historii'; this.loading = false; }
     });
+  }
+
+  loadPage(pageIndex: number) {
+    this.loading = true;
+    this.errorMsg = '';
+
+    const f = (this.filterCode || '').trim().toUpperCase();
+    const pageParam = String(pageIndex + 1); // backend ma 1-based
+
+    this.api.listRequestsPage(f, pageParam).subscribe({
+      next: list => {
+        this.page = pageIndex;
+        this.history = list;
+
+        // jeśli przyszło równo pageSize, to zakładamy że może być kolejna strona
+        this.hasNext = (list?.length ?? 0) === this.pageSize;
+
+        this.loading = false;
+      },
+      error: e => {
+        this.errorMsg = e?.message || 'Błąd pobierania historii';
+        this.loading = false;
+      }
+    });
+  }
+
+  nextPage() {
+    if (!this.hasNext || this.loading) return;
+    this.loadPage(this.page + 1);
+  }
+
+  previousPage() {
+    if (this.page <= 0 || this.loading) return;
+    this.loadPage(this.page - 1);
   }
 }

@@ -24,7 +24,20 @@ export class CurrencyService {
     return this.http.get<CurrencyRequestView[]>(`${this.base}/currencies/requests`, { params });
   }
 
+  listRequestsPage(code?: string, page?: string): Observable<CurrencyRequestView[]> {
+     let params = new HttpParams();
+     if (code && code.trim()) params = params.set('code', code.trim());
+     if (page) params = params.set('page', page);
+     return this.http.get<CurrencyRequestView[]>(`${this.base}/currencies/requests`, { params });
+  }
+
   getCodes() {
   return this.http.get<CurrencyCodeView[]>(`${this.base}/nbp/codes`);
   }
+
+  delete(id: number) {
+      let params = new HttpParams();
+      if (id) params = params.set('id', id);
+      return this.http.delete<void>(`${this.base}/currencies/requests`, { params });
+      }
 }

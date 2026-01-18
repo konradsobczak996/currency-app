@@ -53,6 +53,26 @@
     </tr>
     </tbody>
   </table>
+  <p></p>
+  <div class="toolbar">
+    <strong>Strona {{ page + 1 }}</strong>
+
+    <button
+      *ngIf="page > 0"
+      type="button"
+      [disabled]="loading"
+      (click)="previousPage()">
+      Poprzednia strona
+    </button>
+
+    <button
+      *ngIf="hasNext"
+      type="button"
+      [disabled]="loading"
+      (click)="nextPage()">
+      Następna strona
+    </button>
+  </div>
 
   <div *ngIf="!history?.length && !loading" class="muted">Brak danych</div>
 </div>
